@@ -1,7 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import "dotenv/config";
-import { GeminiApiKey } from "../variables";
+import dotenv from "dotenv";
+dotenv.config();
+// import { GeminiApiKey } from "../variables";
 
+const GeminiApiKey = process.env.GeminiApiKey;
+if (!GeminiApiKey) {
+  throw new Error("geminiApiKey is not defined in environment variables.");
+}
 const genAI = new GoogleGenerativeAI(GeminiApiKey);
 
 const geminiFlash = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
@@ -47,6 +52,8 @@ export async function processMessageWithGemini(text: string) {
   } catch (error) {
     console.error("Error processing message with Gemini:", error);
     // You might want to return a default structure or re-throw the error
-    throw new Error(`Failed to process message with Gemini: ${JSON.stringify(error, null, 2)}`);
+    throw new Error(
+      `Failed to process message with Gemini: ${JSON.stringify(error, null, 2)}`
+    );
   }
 }
