@@ -61,6 +61,7 @@ servicesRouter.post("/incoming-messages", async (req, res) => {
       );
       // Get coordinates if location is available
       const coords = await getCoordinates(processedData.location);
+      console.log("Coordinates:", coords);
       const finalData = {
         ...message,
         ...processedData,
